@@ -1,5 +1,7 @@
 package com.example.policy_admin_system.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,27 +12,32 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="policy")
+@Table(name = "policy")
 public class Policy {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name ="entryNo")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "entryNo")
     private int entryNo;
+
     @Column(name = "policyNumber")
     private int policyNumber;
+
     @Column(name = "effectiveDate")
-    private Date effectiveDate;
+    private String effectiveDate;
+
     @Column(name = "expirationDate")
-    private Date  expirationDate;
+    private String expirationDate;
+
     @Column(name = "type")
     private int type;
+
     @Column(name = "vehicles")
-    private int vehicles; 
+    private int vehicles;
 
+    public Policy() {
+    }
 
-    public Policy() {}
-
-    public Policy(int entryNo, int policyNumber, Date effectiveDate, Date expirationDate, int type, int vehicles){
+    public Policy(int entryNo, int policyNumber, String effectiveDate, String expirationDate, int type, int vehicles) {
         this.entryNo = entryNo;
         this.policyNumber = policyNumber;
         this.effectiveDate = effectiveDate;
@@ -38,15 +45,16 @@ public class Policy {
         this.type = type;
         this.vehicles = vehicles;
     }
+
     /**
-     * @return int return the entryNo
+     * @return int return the id
      */
     public int getEntryNo() {
         return entryNo;
     }
 
     /**
-     * @param entryNo the entryNo to set
+     * @param id the id to set
      */
     public void setEntryNo(int entryNo) {
         this.entryNo = entryNo;
@@ -69,28 +77,28 @@ public class Policy {
     /**
      * @return String return the effectiveDate
      */
-    public Date getEffectiveDate() {
+    public String getEffectiveDate() {
         return effectiveDate;
     }
 
     /**
      * @param effectiveDate the effectiveDate to set
      */
-    public void setEffectiveDate(Date effectiveDate) {
+    public void setEffectiveDate(String effectiveDate) {
         this.effectiveDate = effectiveDate;
     }
 
     /**
      * @return String return the expirationDate
      */
-    public Date getExpirationDate() {
+    public String getExpirationDate() {
         return expirationDate;
     }
 
     /**
      * @param expirationDate the expirationDate to set
      */
-    public void setExpirationDate(Date expirationDate) {
+    public void setExpirationDate(String expirationDate) {
         this.expirationDate = expirationDate;
     }
 
