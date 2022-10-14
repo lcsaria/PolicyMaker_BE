@@ -10,6 +10,4 @@ public class AutomobilePolicySystemBackendApplication {
 		SpringApplication.run(AutomobilePolicySystemBackendApplication.class, args);
 	}
 
-}	
-
-	
+}

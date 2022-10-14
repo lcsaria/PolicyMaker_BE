@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.example.policy_admin_system.model.PolicyHolder;
 
 @Repository
-public interface PolicyHolderRepository extends JpaRepository<PolicyHolder, String> {
+public interface PolicyHolderRepository extends JpaRepository<PolicyHolder, Long> {
 
 }

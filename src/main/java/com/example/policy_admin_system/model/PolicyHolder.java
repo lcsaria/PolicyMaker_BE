@@ -2,13 +2,19 @@ package com.example.policy_admin_system.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "policyHolder")
+@Table(name = "policy_holder")
 public class PolicyHolder {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int id;
+
     @Column(name = "policyNumber")
     private String policyNumber;
 
@@ -30,8 +36,9 @@ public class PolicyHolder {
     public PolicyHolder() {
     }
 
-    public PolicyHolder(String policyNumber, String firstName, String lastName, String address, String licenseNumber,
-            String dateIssued) {
+    public PolicyHolder(int id, String policyNumber, String firstName, String lastName,
+            String address, String licenseNumber, String dateIssued) {
+        this.id = id;
         this.policyNumber = policyNumber;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -122,6 +129,20 @@ public class PolicyHolder {
      */
     public void setDateIssued(String dateIssued) {
         this.dateIssued = dateIssued;
+    }
+
+    /**
+     * @return int return the log
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @param log the log to set
+     */
+    public void setLog(int id) {
+        this.id = id;
     }
 
 }

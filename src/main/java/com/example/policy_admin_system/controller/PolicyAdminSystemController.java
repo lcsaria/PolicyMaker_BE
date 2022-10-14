@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.policy_admin_system.model.CustomerAccount;
 import com.example.policy_admin_system.model.Policy;
+import com.example.policy_admin_system.model.PolicyHolder;
 import com.example.policy_admin_system.repository.CustomerAccountRepository;
+import com.example.policy_admin_system.repository.PolicyHolderRepository;
 import com.example.policy_admin_system.repository.PolicyRepository;
 
 @RestController
@@ -24,6 +26,9 @@ public class PolicyAdminSystemController {
    private CustomerAccountRepository customerAccountRepository;
    @Autowired
    private PolicyRepository policyRepository;
+
+   @Autowired
+   private PolicyHolderRepository policyHolderRepository;
 
    // create customer account
    @PostMapping("/customer_account")
@@ -61,5 +66,10 @@ public class PolicyAdminSystemController {
    @PostMapping("/policy")
    public Policy createPolicy(@RequestBody Policy policy) {
       return policyRepository.save(policy);
+   }
+
+   @PostMapping("/policyHolder")
+   public PolicyHolder createPolicyHolder(@RequestBody PolicyHolder policyHolder) {
+      return policyHolderRepository.save(policyHolder);
    }
 }
