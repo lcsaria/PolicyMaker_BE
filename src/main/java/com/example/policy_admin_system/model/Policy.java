@@ -25,7 +25,7 @@ public class Policy {
     private String expirationDate;
 
     @Column(name = "type")
-    private int type;
+    private String type;
 
     @Column(name = "vehicles")
     private int vehicles;
@@ -33,7 +33,8 @@ public class Policy {
     public Policy() {
     }
 
-    public Policy(int entryNo, int policyNumber, String effectiveDate, String expirationDate, int type, int vehicles) {
+    public Policy(int entryNo, int policyNumber, String effectiveDate, String expirationDate, String type,
+            int vehicles) {
         this.entryNo = entryNo;
         this.policyNumber = policyNumber;
         this.effectiveDate = effectiveDate;
@@ -101,14 +102,14 @@ public class Policy {
     /**
      * @return int return the type
      */
-    public int getType() {
+    public String getType() {
         return type;
     }
 
     /**
      * @param type the type to set
      */
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
