@@ -94,4 +94,16 @@ public class PolicyAdminSystemController {
          return new ResponseEntity<>(null, HttpStatus.OK);
       }
    }
+
+   @PostMapping("/policy/search")
+   public ResponseEntity<List<Policy>> getPolicyFromPolicyNumber(@RequestBody Policy policy) {
+      List<Policy> result = policyRepository.findByPolicyNumber(policy.getPolicyNumber());
+      System.out.println(result.get(0).getPolicyNumber());
+      if (result.isEmpty()) {
+         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+      } else {
+         return new ResponseEntity<>(result, HttpStatus.OK);
+
+      }
+   }
 }
