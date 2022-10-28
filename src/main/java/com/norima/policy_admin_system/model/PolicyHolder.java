@@ -1,4 +1,4 @@
-package com.example.policy_admin_system.model;
+package com.norima.policy_admin_system.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package com.example.policy_admin_system.controller;
+package com.norima.policy_admin_system.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.policy_admin_system.model.CustomerAccount;
-import com.example.policy_admin_system.model.Policy;
-import com.example.policy_admin_system.model.PolicyHolder;
-import com.example.policy_admin_system.model.Vehicle;
-import com.example.policy_admin_system.repository.CustomerAccountRepository;
-import com.example.policy_admin_system.repository.PolicyHolderRepository;
-import com.example.policy_admin_system.repository.PolicyRepository;
-import com.example.policy_admin_system.repository.VehicleRepository;
+import com.norima.policy_admin_system.model.CustomerAccount;
+import com.norima.policy_admin_system.model.Policy;
+import com.norima.policy_admin_system.model.PolicyHolder;
+import com.norima.policy_admin_system.model.Vehicle;
+import com.norima.policy_admin_system.repository.CustomerAccountRepository;
+import com.norima.policy_admin_system.repository.PolicyHolderRepository;
+import com.norima.policy_admin_system.repository.PolicyRepository;
+import com.norima.policy_admin_system.repository.VehicleRepository;
 
 @RestController
 @RequestMapping("/api/v1/")
