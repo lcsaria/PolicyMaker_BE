@@ -1,6 +1,7 @@
 package com.norima.policy_admin_system.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,10 +115,14 @@ public class PolicyAdminSystemController {
    public ResponseEntity<?> getPolicyFromPolicyNumber(@RequestBody Policy policy) {
       List<Policy> pInfo = policyRepository.findByPolicyNumber(policy.getPolicyNumber());
       List<PolicyHolder> holder = policyHolderRepository.findByPolicyNumber(policy.getPolicyNumber());
+      List<Vehicle> vList = vehicleRepository.findByPolicyNumber(policy.getPolicyNumber());
 
-      List<Object> result = new ArrayList<Object>();
-      result.add(pInfo.get(0));
-      result.add(holder.toArray());
+      Map<String, Object> result = new HashMap<String, Object>();
+
+      result.put("policy", pInfo);
+      result.put("policyHolder", holder);
+      result.put("vehicle", vList);
+
       if (result.isEmpty()) {
          return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
       } else {
