@@ -1,10 +1,15 @@
 package com.norima.policy_admin_system.controller;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,15 +100,28 @@ public class PolicyAdminSystemController {
       }
    }
 
+   /*
+    * response:
+    * policyNo: ******,
+    * policy: {
+    * .....
+    * },
+    * holder: {
+    * .....
+    * }
+    */
    @PostMapping("/policy/search")
-   public ResponseEntity<List<Policy>> getPolicyFromPolicyNumber(@RequestBody Policy policy) {
-      List<Policy> result = policyRepository.findByPolicyNumber(policy.getPolicyNumber());
-      System.out.println(result.get(0).getPolicyNumber());
+   public ResponseEntity<?> getPolicyFromPolicyNumber(@RequestBody Policy policy) {
+      List<Policy> pInfo = policyRepository.findByPolicyNumber(policy.getPolicyNumber());
+      List<PolicyHolder> holder = policyHolderRepository.findByPolicyNumber(policy.getPolicyNumber());
+
+      List<Object> result = new ArrayList<Object>();
+      result.add(pInfo.get(0));
+      result.add(holder.toArray());
       if (result.isEmpty()) {
          return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
       } else {
          return new ResponseEntity<>(result, HttpStatus.OK);
-
       }
    }
 }
