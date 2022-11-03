@@ -1,8 +1,6 @@
 package com.norima.policy_admin_system.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -118,12 +115,10 @@ public class PolicyAdminSystemController {
       List<Vehicle> vList = vehicleRepository.findByPolicyNumber(policy.getPolicyNumber());
 
       Map<String, Object> result = new HashMap<String, Object>();
-
-      result.put("policy", pInfo);
-      result.put("policyHolder", holder);
+      result.put("policy", pInfo.get(0));
+      result.put("policyHolder", holder.get(0));
       result.put("vehicle", vList);
-
-      if (result.isEmpty()) {
+      if (pInfo.isEmpty()) {
          return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
       } else {
          return new ResponseEntity<>(result, HttpStatus.OK);
