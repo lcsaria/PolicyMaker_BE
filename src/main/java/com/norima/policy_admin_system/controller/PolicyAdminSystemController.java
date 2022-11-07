@@ -50,12 +50,16 @@ public class PolicyAdminSystemController {
    @PostMapping("/customer_account/search")
    public ResponseEntity<List<CustomerAccount>> getCustomerAccountByFirstNameAndLastName(
          @RequestBody CustomerAccount customerAccount) {
-      List<CustomerAccount> result = customerAccountRepository
-            .findByFirstNameAndLastName(customerAccount.getFirstName(), customerAccount.getLastName());
-      if (result.isEmpty()) {
-         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-      } else {
-         return new ResponseEntity<>(result, HttpStatus.OK);
+      try {
+         List<CustomerAccount> result = customerAccountRepository
+               .findByFirstNameAndLastName(customerAccount.getFirstName(), customerAccount.getLastName());
+         if (result.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+         } else {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+         }
+      } catch (Exception e) {
+         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
       }
    }
 
@@ -63,11 +67,16 @@ public class PolicyAdminSystemController {
    @PostMapping("/customer_account/searchID")
    public ResponseEntity<List<CustomerAccount>> getCustomerAccountByAccountNumber(
          @RequestBody CustomerAccount customerAccount) {
-      List<CustomerAccount> result = customerAccountRepository.findByAccountNumber(customerAccount.getAccountNumber());
-      if (result.isEmpty()) {
-         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-      } else {
-         return new ResponseEntity<>(result, HttpStatus.OK);
+      try {
+         List<CustomerAccount> result = customerAccountRepository
+               .findByAccountNumber(customerAccount.getAccountNumber());
+         if (result.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+         } else {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+         }
+      } catch (Exception e) {
+         return new ResponseEntity<>(null, HttpStatus.BAD_GATEWAY);
       }
    }
 
@@ -86,16 +95,20 @@ public class PolicyAdminSystemController {
    // create vehicles
    @PostMapping("/vehicles")
    public ResponseEntity<List<Vehicle>> createVehicle(@RequestBody List<Vehicle> vehicle) {
-
-      if (vehicle.get(0).getPolicyNumber() == "") {
-         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-      } else {
-         // for each vehicle
-         for (Vehicle e : vehicle) {
-            vehicleRepository.save(e);
+      try {
+         if (vehicle.get(0).getPolicyNumber() == "") {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+         } else {
+            // for each vehicle
+            for (Vehicle e : vehicle) {
+               vehicleRepository.save(e);
+            }
+            return new ResponseEntity<>(null, HttpStatus.OK);
          }
-         return new ResponseEntity<>(null, HttpStatus.OK);
+      } catch (Exception e) {
+         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
       }
+
    }
 
    /*
@@ -110,18 +123,23 @@ public class PolicyAdminSystemController {
     */
    @PostMapping("/policy/search")
    public ResponseEntity<?> getPolicyFromPolicyNumber(@RequestBody Policy policy) {
-      List<Policy> pInfo = policyRepository.findByPolicyNumber(policy.getPolicyNumber());
-      List<PolicyHolder> holder = policyHolderRepository.findByPolicyNumber(policy.getPolicyNumber());
-      List<Vehicle> vList = vehicleRepository.findByPolicyNumber(policy.getPolicyNumber());
+      try {
+         List<Policy> pInfo = policyRepository.findByPolicyNumber(policy.getPolicyNumber());
+         List<PolicyHolder> holder = policyHolderRepository.findByPolicyNumber(policy.getPolicyNumber());
+         List<Vehicle> vList = vehicleRepository.findByPolicyNumber(policy.getPolicyNumber());
 
-      Map<String, Object> result = new HashMap<String, Object>();
-      result.put("policy", pInfo.get(0));
-      result.put("policyHolder", holder.get(0));
-      result.put("vehicle", vList);
-      if (pInfo.isEmpty()) {
-         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-      } else {
-         return new ResponseEntity<>(result, HttpStatus.OK);
+         Map<String, Object> result = new HashMap<String, Object>();
+         result.put("policy", pInfo.get(0));
+         result.put("holder", holder.get(0));
+         result.put("vehicle", vList);
+         if (pInfo.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+         } else {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+         }
+      } catch (Exception e) {
+         System.out.println(e);
+         return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
       }
    }
 }
