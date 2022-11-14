@@ -23,7 +23,7 @@ import com.norima.policy_admin_system.repository.PolicyRepository;
 import com.norima.policy_admin_system.repository.VehicleRepository;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1")
 @CrossOrigin
 public class PolicyAdminSystemController {
 
