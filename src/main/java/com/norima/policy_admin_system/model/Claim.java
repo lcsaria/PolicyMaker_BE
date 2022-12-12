@@ -39,9 +39,8 @@ public class Claim {
     public Claim() {
     }
 
-    public Claim(int id, String claimNumber, String date, String address, String description, String damageDescription,
+    public Claim(String claimNumber, String date, String address, String description, String damageDescription,
             String cost, String policyNumber) {
-        this.id = id;
         this.claimNumber = claimNumber;
         this.date = date;
         this.address = address;
