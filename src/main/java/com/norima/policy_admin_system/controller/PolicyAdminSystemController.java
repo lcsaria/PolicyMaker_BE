@@ -13,19 +13,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.norima.policy_admin_system.model.Claim;
 import com.norima.policy_admin_system.model.CustomerAccount;
 import com.norima.policy_admin_system.model.Policy;
 import com.norima.policy_admin_system.model.PolicyHolder;
 import com.norima.policy_admin_system.model.Vehicle;
+import com.norima.policy_admin_system.repository.ClaimRepository;
 import com.norima.policy_admin_system.repository.CustomerAccountRepository;
 import com.norima.policy_admin_system.repository.PolicyHolderRepository;
 import com.norima.policy_admin_system.repository.PolicyRepository;
 import com.norima.policy_admin_system.repository.VehicleRepository;
+import com.norima.policy_admin_system.services.CustomerAccountServices;
 
 @RestController
 @RequestMapping("/api/v1")
 @CrossOrigin
 public class PolicyAdminSystemController {
+   @Autowired
+   private CustomerAccountServices customerAccountServices;
 
    @Autowired
    private CustomerAccountRepository customerAccountRepository;
@@ -39,16 +44,20 @@ public class PolicyAdminSystemController {
    @Autowired
    private VehicleRepository vehicleRepository;
 
+   @Autowired
+   private ClaimRepository claimRepository;
+
    // create customer account
    @PostMapping("/customer_account")
    public CustomerAccount createCustomerAccount(@RequestBody CustomerAccount customerAccount) {
-      return customerAccountRepository.save(customerAccount);
+      return customerAccountServices.createAccount(customerAccount);
    }
 
    // search customer account
    @PostMapping("/customer_account/search")
    public ResponseEntity<List<CustomerAccount>> getCustomerAccountByFirstNameAndLastName(
          @RequestBody CustomerAccount customerAccount) {
+
       try {
          List<CustomerAccount> result = customerAccountRepository
                .findByFirstNameAndLastName(customerAccount.getFirstName(), customerAccount.getLastName());
@@ -160,5 +169,12 @@ public class PolicyAdminSystemController {
          System.out.println(e);
          return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
       }
+   }
+
+   // file claim
+
+   @PostMapping("/claim")
+   public Claim fileClaim(@RequestBody Claim claim) {
+      return claimRepository.save(claim);
    }
 }
