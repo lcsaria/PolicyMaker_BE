@@ -33,9 +33,6 @@ public class PolicyAdminSystemController {
    private CustomerAccountServices customerAccountServices;
 
    @Autowired
-   private CustomerAccountRepository customerAccountRepository;
-
-   @Autowired
    private PolicyRepository policyRepository;
 
    @Autowired
@@ -59,8 +56,8 @@ public class PolicyAdminSystemController {
          @RequestBody CustomerAccount customerAccount) {
 
       try {
-         List<CustomerAccount> result = customerAccountRepository
-               .findByFirstNameAndLastName(customerAccount.getFirstName(), customerAccount.getLastName());
+         List<CustomerAccount> result = customerAccountServices
+               .getCustomerAccountByFirstNameAndLastName(customerAccount);
          if (result.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
          } else {
@@ -76,8 +73,9 @@ public class PolicyAdminSystemController {
    public ResponseEntity<List<CustomerAccount>> getCustomerAccountByAccountNumber(
          @RequestBody CustomerAccount customerAccount) {
       try {
-         List<CustomerAccount> result = customerAccountRepository
-               .findByAccountNumber(customerAccount.getAccountNumber());
+         List<CustomerAccount> result = customerAccountServices
+                 .getCustomerAccountByAccountNumber(customerAccount);
+         
          if (result.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
          } else {
