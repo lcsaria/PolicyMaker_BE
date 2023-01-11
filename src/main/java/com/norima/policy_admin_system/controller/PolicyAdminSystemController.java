@@ -30,7 +30,7 @@ import com.norima.policy_admin_system.services.CustomerAccountServices;
 @CrossOrigin
 public class PolicyAdminSystemController {
    @Autowired
-   private CustomerAccountServices customerAccountServices;
+   private CustomerAccountServices customerAccountService;
 
    @Autowired
    private PolicyRepository policyRepository;
@@ -47,7 +47,7 @@ public class PolicyAdminSystemController {
    // create customer account
    @PostMapping("/customer_account")
    public CustomerAccount createCustomerAccount(@RequestBody CustomerAccount customerAccount) {
-      return customerAccountServices.createAccount(customerAccount);
+      return customerAccountService.createAccount(customerAccount);
    }
 
    // search customer account
@@ -56,7 +56,7 @@ public class PolicyAdminSystemController {
          @RequestBody CustomerAccount customerAccount) {
 
       try {
-         List<CustomerAccount> result = customerAccountServices
+         List<CustomerAccount> result = customerAccountService
                .getCustomerAccountByFirstNameAndLastName(customerAccount);
          if (result.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -73,7 +73,7 @@ public class PolicyAdminSystemController {
    public ResponseEntity<List<CustomerAccount>> getCustomerAccountByAccountNumber(
          @RequestBody CustomerAccount customerAccount) {
       try {
-         List<CustomerAccount> result = customerAccountServices
+         List<CustomerAccount> result = customerAccountService
                  .getCustomerAccountByAccountNumber(customerAccount);
          
          if (result.isEmpty()) {
@@ -124,6 +124,9 @@ public class PolicyAdminSystemController {
     * .....
     * },
     * holder: {
+    * .....
+    * }
+    * vehicles: {
     * .....
     * }
     */
