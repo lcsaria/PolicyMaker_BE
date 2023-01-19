@@ -16,16 +16,16 @@ public class CustomerAccountServices {
     @Autowired
     private CustomerAccountRepository customerAccountRepository;
 
-    public CustomerAccount createAccount(CustomerAccount customerAccount) {
+    public CustomerAccount create(CustomerAccount customerAccount) {
         return customerAccountRepository.save(customerAccount);
     }
 
-    public List<CustomerAccount> getCustomerAccountByFirstNameAndLastName(CustomerAccount customerAccount) {
+    public List<CustomerAccount> getByFirstNameAndLastName(CustomerAccount customerAccount) {
         return customerAccountRepository
                 .findByFirstNameAndLastName(customerAccount.getFirstName(), customerAccount.getLastName());
     }
     
-    public List<CustomerAccount> getCustomerAccountByAccountNumber(CustomerAccount customerAccount){
+    public List<CustomerAccount> getByAccountNumber(CustomerAccount customerAccount){
         return customerAccountRepository
                 .findByAccountNumber(customerAccount.getAccountNumber());
     }

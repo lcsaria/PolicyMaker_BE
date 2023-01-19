@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.norima.policy_admin_system.services.PolicyServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import com.norima.policy_admin_system.repository.CustomerAccountRepository;
 import com.norima.policy_admin_system.repository.PolicyHolderRepository;
 import com.norima.policy_admin_system.repository.PolicyRepository;
 import com.norima.policy_admin_system.repository.VehicleRepository;
+import com.norima.policy_admin_system.services.ClaimServices;
 import com.norima.policy_admin_system.services.CustomerAccountServices;
 
 @RestController
@@ -31,6 +33,9 @@ import com.norima.policy_admin_system.services.CustomerAccountServices;
 public class PolicyAdminSystemController {
    @Autowired
    private CustomerAccountServices customerAccountService;
+
+   @Autowired
+   private PolicyServices policyServices;
 
    @Autowired
    private PolicyRepository policyRepository;
@@ -44,10 +49,13 @@ public class PolicyAdminSystemController {
    @Autowired
    private ClaimRepository claimRepository;
 
+   @Autowired
+   private ClaimServices claimService;
+
    // create customer account
    @PostMapping("/customer_account")
    public CustomerAccount createCustomerAccount(@RequestBody CustomerAccount customerAccount) {
-      return customerAccountService.createAccount(customerAccount);
+      return customerAccountService.create(customerAccount);
    }
 
    // search customer account
@@ -57,7 +65,7 @@ public class PolicyAdminSystemController {
 
       try {
          List<CustomerAccount> result = customerAccountService
-               .getCustomerAccountByFirstNameAndLastName(customerAccount);
+               .getByFirstNameAndLastName(customerAccount);
          if (result.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
          } else {
@@ -74,8 +82,8 @@ public class PolicyAdminSystemController {
          @RequestBody CustomerAccount customerAccount) {
       try {
          List<CustomerAccount> result = customerAccountService
-                 .getCustomerAccountByAccountNumber(customerAccount);
-         
+               .getByAccountNumber(customerAccount);
+
          if (result.isEmpty()) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
          } else {
@@ -89,7 +97,7 @@ public class PolicyAdminSystemController {
    // create policy
    @PostMapping("/policy")
    public Policy createPolicy(@RequestBody Policy policy) {
-      return policyRepository.save(policy);
+      return policyServices.create(policy);
    }
 
    // create policy holder
@@ -177,5 +185,22 @@ public class PolicyAdminSystemController {
    @PostMapping("/claim")
    public Claim fileClaim(@RequestBody Claim claim) {
       return claimRepository.save(claim);
+   }
+
+   // search claim
+   @PostMapping("/customer_account/search")
+   public ResponseEntity<List<Claim>> getClaimsByClaimNumber(
+         @RequestBody Claim claim) {
+
+      try {
+         List<Claim> result = claimService.findClaim(claim);
+         if (result.isEmpty()) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+         } else {
+            return new ResponseEntity<>(result, HttpStatus.OK);
+         }
+      } catch (Exception e) {
+         return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+      }
    }
 }

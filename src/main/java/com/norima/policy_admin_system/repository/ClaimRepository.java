@@ -9,5 +9,5 @@ import com.norima.policy_admin_system.model.Claim;
 
 @Repository
 public interface ClaimRepository extends JpaRepository<Claim, Long> {
-    List<Claim> findByClaimNumber(String policy);
+    List<Claim> findByClaimNumber(Claim claim);
 }
